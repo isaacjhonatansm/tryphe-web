@@ -1,0 +1,522 @@
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:'Inter',sans-serif;
+  background:
+  radial-gradient(circle at 20% 20%, #1a1a1d, #0b0b0c 70%);
+  color:white;
+}
+
+/* APP */
+
+.app{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+  padding:40px;
+}
+
+/* PANEL PRINCIPAL */
+
+.screen{
+
+  width:100%;
+  max-width:560px;
+
+  padding:40px;
+
+  border-radius:20px;
+
+  background:rgba(255,255,255,0.04);
+
+  backdrop-filter:blur(14px);
+
+  border:1px solid rgba(255,255,255,0.06);
+
+  box-shadow:
+  0 20px 60px rgba(0,0,0,0.6);
+
+  animation:fadeIn .6s ease;
+
+}
+
+/* TITULOS */
+
+h1{
+  font-size:46px;
+  letter-spacing:6px;
+  font-weight:600;
+}
+
+h2{
+  font-weight:500;
+  margin-bottom:20px;
+}
+
+h3{
+  font-weight:500;
+}
+
+/* SUBTEXTO */
+
+.subtitle{
+  opacity:.65;
+  margin-bottom:36px;
+}
+
+/* BOTONES */
+
+.primary-button{
+
+  border:none;
+
+  padding:14px 28px;
+
+  font-size:15px;
+
+  border-radius:8px;
+
+  cursor:pointer;
+
+}
+
+/* GOLD BUTTON */
+
+.btn-gold{
+
+  background:linear-gradient(45deg,#d4af37,#f5e6a1);
+
+  border:none;
+
+  color:#000;
+
+  border-radius:50px;
+
+  font-weight:600;
+
+  padding:14px 34px;
+
+  cursor:pointer;
+
+  transition:all .25s ease;
+
+}
+
+.btn-gold:hover{
+
+  transform:translateY(-3px);
+
+  box-shadow:
+  0 12px 30px rgba(212,175,55,.35);
+
+}
+
+/* SLIDERS */
+
+.slider-group{
+
+  margin:22px 0;
+
+  text-align:left;
+
+}
+
+.slider-group label{
+
+  display:block;
+
+  font-size:14px;
+
+  opacity:.75;
+
+  margin-bottom:6px;
+
+}
+
+.slider-group input{
+
+  width:100%;
+
+}
+
+/* RESULTADOS */
+
+.results-list{
+
+  margin-top:26px;
+
+}
+
+.result-card{
+
+  padding:18px;
+
+  border-radius:12px;
+
+  background:rgba(255,255,255,0.05);
+
+  border:1px solid rgba(255,255,255,0.04);
+
+  margin-bottom:14px;
+
+  transition:transform .2s ease;
+
+}
+
+.result-card:hover{
+
+  transform:translateY(-2px);
+
+}
+
+/* SCORE */
+
+.score{
+
+  opacity:.7;
+
+  font-size:14px;
+
+}
+
+/* BOTELLA 3D */
+
+.bottle-container{
+
+  height:260px;
+
+  margin-bottom:20px;
+
+}
+
+/* QR */
+
+.qr-container{
+
+  display:flex;
+
+  justify-content:center;
+
+  margin:34px 0;
+
+}
+
+.qr-box{
+
+  padding:18px;
+
+  border-radius:16px;
+
+  background:white;
+
+}
+
+/* ANIMACIONES */
+
+@keyframes fadeIn{
+
+  from{
+
+    opacity:0;
+
+    transform:translateY(14px);
+
+  }
+
+  to{
+
+    opacity:1;
+
+    transform:translateY(0);
+
+  }
+
+}
+
+@media(min-width:900px){
+
+  .results-top{
+
+    grid-template-columns:1fr 1fr;
+
+    align-items:center;
+
+  }
+
+}
+
+.result-card img{
+
+  width:100%;
+
+  height:auto;
+
+  border-radius:10px;
+
+  object-fit:cover;
+
+  border:1px solid rgba(255,255,255,0.05);
+
+}
+
+/* CONTENEDOR */
+
+.carousel-container{
+
+  width:100%;
+
+  overflow:hidden;
+
+  margin-top:40px;
+
+}
+
+
+/* TRACK */
+
+.carousel{
+
+  display:flex;
+
+  gap:30px;
+
+  overflow-x:auto;
+
+  padding:20px;
+
+  scroll-snap-type:x mandatory;
+
+  scroll-behavior:smooth;
+
+}
+
+
+/* OCULTAR SCROLL */
+
+.carousel::-webkit-scrollbar{
+  display:none;
+}
+
+
+/* TARJETA */
+
+.carousel-card{
+
+  min-width:280px;
+
+  background:rgba(255,255,255,0.04);
+
+  border-radius:16px;
+
+  padding:16px;
+
+  backdrop-filter:blur(10px);
+
+  border:1px solid rgba(255,255,255,0.06);
+
+  scroll-snap-align:center;
+
+  transition:transform .35s ease, box-shadow .35s ease;
+
+}
+
+
+/* HOVER LUXURY */
+
+.carousel-card:hover{
+
+  transform:translateY(-6px) scale(1.03);
+
+  box-shadow:0 20px 40px rgba(0,0,0,0.4);
+
+}
+
+
+/* IMAGEN */
+
+.carousel-card img{
+
+  width:100%;
+
+  height:180px;
+
+  object-fit:cover;
+
+  border-radius:10px;
+
+  margin-bottom:12px;
+
+}
+
+
+/* INFO */
+
+.carousel-info h3{
+
+  font-size:1rem;
+
+  margin-bottom:4px;
+
+}
+
+.carousel-info p{
+
+  font-size:.85rem;
+
+  opacity:.6;
+
+  margin-bottom:8px;
+
+}
+
+
+/* SCORE */
+
+.score{
+
+  font-weight:600;
+
+  color:#d4af37;
+
+}
+
+.bottle-3d{
+
+  width:220px;
+
+  margin:auto;
+
+  filter:drop-shadow(0 20px 30px rgba(0,0,0,0.5));
+
+}
+
+.bottle-3d img{
+
+  width:100%;
+
+  border-radius:12px;
+
+}
+
+
+.spotlight-title{
+
+  margin-bottom:20px;
+
+  font-size:1.6rem;
+
+  color:#d4af37;
+
+}
+
+
+/* INFO */
+
+.top-match-info h3{
+
+  font-size:1.3rem;
+
+  margin-bottom:6px;
+
+}
+
+.top-match-info p{
+
+  opacity:.7;
+
+  margin-bottom:8px;
+
+}
+
+
+/* SCORE DORADO */
+
+.top-score{
+
+  font-weight:700;
+
+  color:#d4af37;
+
+  font-size:1.1rem;
+
+}
+
+/* LAYOUT GENERAL */
+
+.results-layout{
+
+  width:100%;
+
+  max-width:1200px;
+
+  margin:auto;
+
+  padding:20px;
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:40px;
+
+}
+
+
+/* TOP SECTION */
+
+.results-top{
+
+  display:grid;
+
+  grid-template-columns:1fr 1fr;
+
+  align-items:center;
+
+  gap:40px;
+
+}
+
+
+/* PERFUME DESTACADO */
+
+.top-match{
+
+  width:100%;
+
+  display:flex;
+
+  flex-direction:column;
+
+  align-items:center;
+
+  text-align:center;
+
+}
+
+
+/* CARD DESTACADA */
+
+.top-match-card{
+
+  width:100%;
+
+  max-width:420px;
+
+}
+
+
+/* MOBILE FIX */
+
+@media (max-width:768px){
+
+  .results-top{
+
+    grid-template-columns:1fr;
+
+  }
+
+}

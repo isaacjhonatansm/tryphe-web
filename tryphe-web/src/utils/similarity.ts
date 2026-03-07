@@ -1,20 +1,34 @@
-export function cosineSimilarity(
-  userVector: number[],
-  perfumeVector: number[]
-): number {
+import type{ Fragrance } from "../types/fragrance";
+import { getRandomPerfumeImage } from "./randomPerfumeImage";
 
-  const dotProduct = userVector.reduce(
-    (sum, value, index) => sum + value * perfumeVector[index],
-    0
-  )
+export function calculateSimilarity(
+  profile: number[],
+  fragrances: Fragrance[]
+) {
 
-  const magnitudeA = Math.sqrt(
-    userVector.reduce((sum, value) => sum + value * value, 0)
-  )
+  const results = fragrances.map((f) => {
 
-  const magnitudeB = Math.sqrt(
-    perfumeVector.reduce((sum, value) => sum + value * value, 0)
-  )
+    let diff = 0;
 
-  return dotProduct / (magnitudeA * magnitudeB || 1)
+    for (let i = 0; i < profile.length; i++) {
+      diff += Math.abs(profile[i] - f.notes[i]);
+    }
+
+    const maxDiff = profile.length * 10;
+
+    const score = 100 - (diff / maxDiff) * 100;
+
+    return {
+      fragrance: {
+        ...f,
+        image: getRandomPerfumeImage()
+      },
+      score: Math.round(score)
+    };
+  });
+
+  results.sort((a, b) => b.score - a.score);
+
+  return results;
+
 }

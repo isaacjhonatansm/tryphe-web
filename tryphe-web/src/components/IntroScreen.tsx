@@ -1,42 +1,42 @@
-import { motion } from "framer-motion"
+type Props = {
+  onStart: () => void;
+  onStaff: () => void;
+};
 
-interface Props {
-  onStart: () => void
-}
+export default function IntroScreen({
+  onStart,
+  onStaff
+}: Props) {
 
-const IntroScreen: React.FC<Props> = ({ onStart }) => {
   return (
-    <div className="intro-screen d-flex flex-column justify-content-center align-items-center text-center">
 
-      <motion.h1
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1.2 }}
-        className="brand-title"
-      >
-        TRYHPÉ
-      </motion.h1>
+    <div className="screen">
 
-      <motion.p
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: .8, duration: 1 }}
-        className="brand-subtitle"
-      >
+      <h1>TRYPHÉ</h1>
+
+      <p className="subtitle">
         Descubre tu identidad olfativa
-      </motion.p>
+      </p>
 
-      <motion.button
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.98 }}
+      <button
+        className="btn-gold"
         onClick={onStart}
-        className="btn btn-gold mt-5 px-5 py-3"
       >
-        Comenzar Experiencia
-      </motion.button>
+        Comenzar experiencia
+      </button>
+
+      <div style={{marginTop:30}}>
+
+        <button
+          className="btn-gold"
+          onClick={onStaff}
+        >
+          Modo Staff
+        </button>
+
+      </div>
 
     </div>
-  )
-}
 
-export default IntroScreen
+  );
+}

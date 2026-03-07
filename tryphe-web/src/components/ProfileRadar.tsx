@@ -1,97 +1,56 @@
 import {
-  Radar
-} from "react-chartjs-2"
+  RadarChart,
+  PolarGrid,
+  PolarAngleAxis,
+  PolarRadiusAxis,
+  Radar,
+  ResponsiveContainer
+} from "recharts";
 
-import {
-  Chart,
-  RadialLinearScale,
-  PointElement,
-  LineElement,
-  Filler,
-  Tooltip,
-  Legend
-} from "chart.js"
+type Props = {
+  profile:number[];
+};
 
-Chart.register(
-  RadialLinearScale,
-  PointElement,
-  LineElement,
-  Filler,
-  Tooltip,
-  Legend
-)
+export default function ProfileRadar({ profile }:Props){
 
-interface Props {
-  labels: string[]
-  valuesUser: number[]
-  valuesPerfume: number[]
-}
+  const data = [
 
-const ProfileRadar: React.FC<Props> = ({
-  labels,
-  valuesUser,
-  valuesPerfume
-}) => {
+    { trait:"Citrus", value:profile[0] },
+    { trait:"Floral", value:profile[1] },
+    { trait:"Woody", value:profile[2] },
+    { trait:"Fresh", value:profile[3] },
+    { trait:"Sweet", value:profile[4] },
+    { trait:"Oriental", value:profile[5] }
 
-  const data = {
-    labels,
-    datasets: [
-      {
-        label: "Tu perfil",
-        data: valuesUser,
-        backgroundColor: "rgba(255,255,255,0.05)",
-        borderColor: "#ffffff",
-        borderWidth: 2
-      },
-      {
-        label: "Fragancia recomendada",
-        data: valuesPerfume,
-        backgroundColor: "rgba(212,175,55,0.25)",
-        borderColor: "#d4af37",
-        borderWidth: 2
-      }
-    ]
-  }
+  ];
 
-  const options = {
-    responsive: true,
-    scales: {
-      r: {
-        min: 0,
-        max: 10,
-        ticks: {
-          stepSize: 2,
-          backdropColor: "transparent",
-          color: "#888"
-        },
-        grid: {
-          color: "rgba(255,255,255,0.08)"
-        },
-        angleLines: {
-          color: "rgba(255,255,255,0.08)"
-        },
-        pointLabels: {
-          color: "#aaa",
-          font: {
-            size: 12
-          }
-        }
-      }
-    },
-    plugins: {
-      legend: {
-        labels: {
-          color: "#ccc"
-        }
-      }
-    }
-  }
+  return(
 
-  return (
-    <div style={{ maxWidth: "500px", margin: "0 auto" }}>
-      <Radar data={data} options={options} />
+    <div style={{width:"100%",height:260}}>
+
+      <ResponsiveContainer>
+
+        <RadarChart data={data}>
+
+          <PolarGrid stroke="#444" />
+
+          <PolarAngleAxis dataKey="trait" />
+
+          <PolarRadiusAxis />
+
+          <Radar
+            dataKey="value"
+            stroke="#d4af37"
+            fill="#d4af37"
+            fillOpacity={0.4}
+          />
+
+        </RadarChart>
+
+      </ResponsiveContainer>
+
     </div>
-  )
-}
 
-export default ProfileRadar
+  );
+
+}

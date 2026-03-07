@@ -1,52 +1,84 @@
-import { useState } from "react"
-import IntroScreen from "./components/IntroScreen"
-import ResultsPanel from "./components/ResultsPanel"
-import SliderPanel from "./components/SliderPanel"
-import KioskLayout from "./components/KioskLayout"
-import AmbientSound from "./components/AmbientSound"
-import {type OlfactiveProfile } from "./types"
+import { useState } from "react";
+import IntroScreen from "./components/IntroScreen";
+import QuizScreen from "./components/QuizScreen";
+import ResultsScreen from "./components/ResultsScreen";
+import QRScreen from "./components/QRScreen";
+import StaffScanner from "./components/StaffScanner";
 
-const initialProfile: OlfactiveProfile = {
-  citricos: 50,
-  amaderados: 50,
-  florales: 50,
-  orientales: 50,
-  frescos: 50,
-  dulces: 50,
-  aromaticos: 50,
-  almizclados: 50,
-  frutales: 50,
-  verdes: 50,
-  especiados: 50,
-  cuero: 50
-}
+export type View =
+  | "intro"
+  | "quiz"
+  | "results"
+  | "qr"
+  | "staff";
 
-function App() {
+export default function App() {
 
-  const [started, setStarted] = useState(false)
-  const [profile, setProfile] = useState<OlfactiveProfile>(initialProfile)
+  const [view, setView] = useState<View>("intro");
+  const [profile, setProfile] = useState<number[]>([]);
 
-  if (!started) {
-    return <IntroScreen onStart={() => setStarted(true)} />
-  }
+  const startQuiz = () => {
+    setView("quiz");
+  };
+
+  const finishQuiz = (values: number[]) => {
+    setProfile(values);
+    setView("results");
+  };
+
+  const generateQR = () => {
+    setView("qr");
+  };
+
+  const restart = () => {
+    setProfile([]);
+    setView("intro");
+  };
+
+  const openStaff = () => {
+    setView("staff");
+  };
+
+  const loadProfileFromQR = (values: number[]) => {
+    setProfile(values);
+    setView("results");
+  };
 
   return (
-    <>
-      <AmbientSound />
+    <div className="app">
 
-      <KioskLayout
-        left={
-          <SliderPanel
-            values={profile}
-            onChange={setProfile}
-          />
-        }
-        right={
-          <ResultsPanel values={profile} />
-        }
-      />
-    </>
-  )
+      {view === "intro" && (
+        <IntroScreen
+          onStart={startQuiz}
+          onStaff={openStaff}
+        />
+      )}
+
+      {view === "quiz" && (
+        <QuizScreen onFinish={finishQuiz} />
+      )}
+
+      {view === "results" && (
+        <ResultsScreen
+          profile={profile}
+          onGenerateQR={generateQR}
+        />
+      )}
+
+      {view === "qr" && (
+        <QRScreen
+          profile={profile}
+          onRestart={restart}
+        />
+      )}
+
+      {view === "staff" && (
+        <StaffScanner
+          onProfileLoaded={loadProfileFromQR}
+          onBack={() => setView("intro")}
+        />
+      )}
+
+    </div>
+  );
 }
-
-export default App
