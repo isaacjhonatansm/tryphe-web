@@ -4,4 +4,5 @@ export type Fragrance = {
   brand: string;
   notes: number[];
   image?: string;
+  description?: string;
 };
