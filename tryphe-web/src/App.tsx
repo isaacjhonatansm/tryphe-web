@@ -1,84 +1,70 @@
 import { useState } from "react";
-import IntroScreen from "./components/IntroScreen";
-import QuizScreen from "./components/QuizScreen";
-import ResultsScreen from "./components/ResultsScreen";
-import QRScreen from "./components/QRScreen";
-import StaffScanner from "./components/StaffScanner";
+import { AnimatePresence } from "framer-motion";
 
-export type View =
-  | "intro"
-  | "quiz"
-  | "results"
-  | "qr"
-  | "staff";
+import LandingPage from "./pages/LandingPage";
+import StaffScanner from "./components/StaffScanner";
+import ResultsOverlay from "./components/ResultsOverlay";
+import QROverlay from "./components/QROverlay";
+
+type View    = "landing" | "staff";
+type Overlay = "none" | "results" | "qr";
 
 export default function App() {
-
-  const [view, setView] = useState<View>("intro");
+  const [view,    setView]    = useState<View>("landing");
+  const [overlay, setOverlay] = useState<Overlay>("none");
   const [profile, setProfile] = useState<number[]>([]);
 
-  const startQuiz = () => {
-    setView("quiz");
-  };
-
-  const finishQuiz = (values: number[]) => {
+  const handleQuizFinish = (values: number[]) => {
     setProfile(values);
-    setView("results");
+    setOverlay("results");
   };
 
-  const generateQR = () => {
-    setView("qr");
-  };
+  const handleGenerateQR = () => setOverlay("qr");
 
-  const restart = () => {
+  const handleRestart = () => {
     setProfile([]);
-    setView("intro");
+    setOverlay("none");
   };
 
-  const openStaff = () => {
-    setView("staff");
-  };
-
-  const loadProfileFromQR = (values: number[]) => {
+  const handleProfileFromQR = (values: number[]) => {
     setProfile(values);
-    setView("results");
+    setView("landing");
+    setOverlay("results");
   };
 
   return (
-    <div className="app">
-
-      {view === "intro" && (
-        <IntroScreen
-          onStart={startQuiz}
-          onStaff={openStaff}
-        />
-      )}
-
-      {view === "quiz" && (
-        <QuizScreen onFinish={finishQuiz} />
-      )}
-
-      {view === "results" && (
-        <ResultsScreen
-          profile={profile}
-          onGenerateQR={generateQR}
-        />
-      )}
-
-      {view === "qr" && (
-        <QRScreen
-          profile={profile}
-          onRestart={restart}
+    <>
+      {view === "landing" && (
+        <LandingPage
+          onQuizFinish={handleQuizFinish}
+          onStaff={() => setView("staff")}
         />
       )}
 
       {view === "staff" && (
         <StaffScanner
-          onProfileLoaded={loadProfileFromQR}
-          onBack={() => setView("intro")}
+          onProfileLoaded={handleProfileFromQR}
+          onBack={() => setView("landing")}
         />
       )}
 
-    </div>
+      <AnimatePresence>
+        {overlay === "results" && (
+          <ResultsOverlay
+            key="results"
+            profile={profile}
+            onGenerateQR={handleGenerateQR}
+            onClose={handleRestart}
+          />
+        )}
+        {overlay === "qr" && (
+          <QROverlay
+            key="qr"
+            profile={profile}
+            onRestart={handleRestart}
+          />
+        )}
+      </AnimatePresence>
+    </>
   );
 }
